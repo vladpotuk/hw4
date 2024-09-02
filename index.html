@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Formatter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background-color: #f9f0e3;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      textarea {
+        width: 300px;
+        height: 150px;
+        font-family: monospace;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: border-color 0.3s;
+      }
+      textarea.error {
+        border-color: red;
+      }
+      button {
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: #6a5acd;
+        color: white;
+        border: none;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #483d8b;
+      }
+      .result {
+        white-space: pre;
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 300px;
+        height: 150px;
+        overflow-y: auto;
+        background-color: #f4f4f4;
+        border-radius: 5px;
+      }
+      .error-message {
+        color: red;
+        font-weight: bold;
+        margin-top: -10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <label for="jsonInput"
+        >Enter JSON data: <span id="errorLabel" class="error-message"></span
+      ></label>
+      <textarea id="jsonInput" placeholder="Enter JSON data here..."></textarea>
+      <button onclick="formatJSON()">Format JSON</button>
+      <div id="jsonOutput" class="result"></div>
+    </div>
+
+    <script>
+      function formatJSON() {
+        const jsonInput = document.getElementById("jsonInput");
+        const jsonOutput = document.getElementById("jsonOutput");
+        const errorLabel = document.getElementById("errorLabel");
+
+        try {
+          const parsedJSON = JSON.parse(jsonInput.value);
+          const formattedJSON = JSON.stringify(parsedJSON, null, 4);
+          jsonOutput.textContent = formattedJSON;
+          jsonInput.classList.remove("error");
+          errorLabel.textContent = "";
+        } catch (error) {
+          jsonOutput.textContent = "";
+          jsonInput.classList.add("error");
+          errorLabel.textContent = "[format error]";
+        }
+      }
+    </script>
+  </body>
+</html>
